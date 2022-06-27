@@ -1,24 +1,12 @@
 {
-  "name": "localwebhooktesting",
+  "name": "stitchlivestreamassets",
   "version": "1.0.0",
-  "description": "Creates a place to not only *receieve* webhooks but also programatically play with them.",
-  "main": "index.js",
+  "description": "Stitches all assets from a live stream together to form a single MP4 and uploads it to Mux.",
+  "main": "stitch.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "run:listener": "./run.sh",
-    "run:node": "nodemon -e html,js,css,sh stitch.js "
+    "stitch": "nodemon -e html,js,css,sh stitch.js "
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/aElchertMux/localWebhookTesting.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/aElchertMux/localWebhookTesting/issues"
-  },
-  "homepage": "https://github.com/aElchertMux/localWebhookTesting#readme",
   "dependencies": {
     "@mux/mux-node": "^5.0.3",
     "axios": "^0.27.2",
