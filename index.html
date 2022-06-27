@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Stitch Live Stream Assets</title>
+        <script src="https://unpkg.com/@mux/upchunk@2"></script>
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+        <style>
+          .response{
+            padding: 1em;
+            width: 90%;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 30px;
+            font-weight: 900;
+            margin: 1em;
+          }
+        </style>
+  </head>
+  <body>
+    
+    <div style="padding:1em;margin:1em;">
+      
+      <h1 style="text-align:center">Live Stream Id</h1>
+      <h2>Test Live Stream ID</h2>
+      <p>KV7WDW2009dVzs01FTvZhyGsSs1pLCi01EWdwixzDxwoQA</p>
+
+      <input type="text" placeholder="Live Stream ID" id="live_stream_id" style="width: 400px; padding:5px" />
+      
+      <button id="stitchAssetsBtn" style="width: 300px;padding:5px;">Stitch Assets</button>
+
+      <div id="rawwebhook" class="response"></div>
+
+      <div id="webhooks" class="response"></div>
+
+
+      <div>
+
+
+        <video
+          id="my-player"
+          controls
+          style="width: 100%; max-width: 500px; display:block; margin: 1em auto;float:left"
+        >
+        <source id="source" src="" type="video/mp4">
+      </video>
+      </div>
+      
+    </div>
+
+    <script>
+
+      $("#stitchAssetsBtn").on('click', async (e) => {
+        $("#assets").html("");
+        const initStitching = await fetch("/stitch", {
+          method: "POST",
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({live_stream_id: $("#live_stream_id").val()})
+        })
+      })
+
+      const socket = io();
+
+      socket.on("webhook", function(message) { 
+        $(`#webhooks`).html(message);
+
+        if(message == 'Lets stitch!'){
+          delay( 5000 );
+          $(`#rawwebhook`).html("");
+        }
+      });
+
+      socket.on("rawwebhook", function(message) { 
+        if(message.indexOf('completed') == -1){
+          const m = message.split(",");
+          m.forEach((item) =>{
+            $(`#rawwebhook`).append(`<p>${item}</p>`);
+          })
+        } else if(message.indexOf('All master access file have been Merged into') != -1){
+          $(`#rawwebhook`).html("");
+          $(`#rawwebhook`).html(message);
+        } else {
+          $(`#rawwebhook`).html(message);
+        }
+        
+      });
+
+      function playVideo(mp4){
+        var video = document.getElementById('my-player');
+        var source = document.getElementById('source');
+        source.setAttribute('src', mp4);
+        video.load();
+        video.play();
+      }
+
+    </script>
+  </body>
+</html>

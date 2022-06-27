@@ -1,0 +1,39 @@
+{
+  "name": "localwebhooktesting",
+  "version": "1.0.0",
+  "description": "Creates a place to not only *receieve* webhooks but also programatically play with them.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "run:listener": "./run.sh",
+    "run:node": "nodemon -e html,js,css,sh stitch.js "
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aElchertMux/localWebhookTesting.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aElchertMux/localWebhookTesting/issues"
+  },
+  "homepage": "https://github.com/aElchertMux/localWebhookTesting#readme",
+  "dependencies": {
+    "@mux/mux-node": "^5.0.3",
+    "axios": "^0.27.2",
+    "body-parser": "^1.20.0",
+    "dotenv": "^16.0.0",
+    "express": "^4.18.0",
+    "fs": "^0.0.1-security",
+    "localtunnel": "^2.0.2",
+    "request": "^2.88.2",
+    "socket.io": "^4.5.0",
+    "update": "^0.7.4"
+  },
+  "devDependencies": {
+    "connect-livereload": "^0.6.1",
+    "livereload": "^0.9.3",
+    "nodemon": "^2.0.16"
+  }
+}
